@@ -9,39 +9,40 @@ router.post('/create', async (req, res, next) => {
 
     // check empty
     if (!req.body.email) {
-        res.send(JSON.stringify({"result" : "Email cannot be empty."}));
+        // return res.status(200).json({ success: false, data: {message: ''} });
+        return res.status(200).json({ success: false, data: {message: 'Email cannot be empty.'} });
     }
 
     if (!req.body.doctorName) {
-        res.send(JSON.stringify({"result" : "Doctor name cannot be empty."}));
+        return res.status(200).json({ success: false, data: {message: 'Doctor name cannot be empty.'} });
     }
 
     if (!req.body.patientName) {
-        res.send(JSON.stringify({"result" : "Patient name cannot be empty."}));
+        return res.status(200).json({ success: false, data: {message: 'Patient name cannot be empty.'} });
     }
 
     if (!req.body.diagnosis) {
-        res.send(JSON.stringify({"result" : "Diagnosis cannot be empty."}));
+        return res.status(200).json({ success: false, data: {message: 'Diagnosis cannot be empty.'} });
     }
 
     if (!req.body.medication) {
-        res.send(JSON.stringify({"result" : "Dedication cannot be empty."}));
+        return res.status(200).json({ success: false, data: {message: 'Dedication cannot be empty.'} });
     }
 
     if (!req.body.fee) {
-        res.send(JSON.stringify({"result" : "Dedication fee cannot be empty."}));
+        return res.status(200).json({ success: false, data: {message: 'Dedication fee cannot be empty.'} });
     }
 
     if (!req.body.date) {
-        res.send(JSON.stringify({"result" : "Date cannot be empty."}));
+        return res.status(200).json({ success: false, data: {message: 'Date cannot be empty.'} });
     }
 
     if (!req.body.time) {
-        res.send(JSON.stringify({"result" : "Time cannot be empty."}));
+        return res.status(200).json({ success: false, data: {message: 'Time cannot be empty.'} });
     }
 
     if (!req.body.followUp) {
-        res.send(JSON.stringify({"result" : "Follow-up consultation cannot be empty."}));
+        return res.status(200).json({ success: false, data: {message: 'Follow-up consultation cannot be empty.'} });
     }
 
 
@@ -60,13 +61,13 @@ router.post('/create', async (req, res, next) => {
                 var sql = 'INSERT INTO records (clinic_id, doctor_name, patient_name, diagnosis, medication, fee, date, time, follow_up) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)';
                 connection.query(sql, record, function (error, results, fields) {
                     if (error) throw error;
-                    res.send(JSON.stringify({"result" : 'Record created.'}));
+                    return res.status(200).json({ success: true, data: {message: 'Record created.'} });
         		});
 
             } else {
                 // user id does not exist in DB
 
-                res.send(JSON.stringify({"result" : "This account cannot create consultation record."}));
+                return res.status(200).json({ success: false, data: {message: 'This account cannot get consultation record.'} });
             }
 		});
 	} catch (err) {
@@ -97,13 +98,12 @@ router.get('/get', async (req, res, next) => {
                     connection.query(sql, userID, function (error, results, fields) {
                         if (error) throw error;
                         // console.log(results);
-                        res.send(JSON.stringify({"result" : results}));
+                        return res.status(200).json({ success: true, data: {message: results} });
             		});
 
                 } else {
                     // user id does not exist in DB
-
-                    res.send(JSON.stringify({"result" : "This account cannot get consultation record."}));
+                    return res.status(200).json({ success: false, data: {message: 'This account cannot get consultation record.'} });
                 }
     		});
     	} catch (err) {
@@ -111,7 +111,7 @@ router.get('/get', async (req, res, next) => {
     	}
         console.log(email);
     } else {
-        res.send(JSON.stringify({"result" : "Parameter is missing. Please check."}));
+        return res.status(200).json({ success: false, data: {message: 'Parameter is missing. Please check.'} });
     }
 });
 

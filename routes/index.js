@@ -4,6 +4,8 @@ var bcrypt = require('bcryptjs');
 
 var connection = require('../db-connector');
 
+// var cors = require('cors');
+// router.options('/', cors())
 
 // db connection
 // try {
@@ -23,23 +25,23 @@ router.post('/signup', async (req, res, next) => {
 
     // check empty
     if (!req.body.email) {
-        res.send(JSON.stringify({"result" : "Email cannot be empty."}));
+        return res.status(200).json({ success: false, data: {message: 'Email cannot be empty.'} });
     }
 
     if (!req.body.password) {
-        res.send(JSON.stringify({"result" : "Password cannot be empty."}));
+        return res.status(200).json({ success: false, data: {message: 'Password cannot be empty.'} });
     }
 
     if (!req.body.clinicName) {
-        res.send(JSON.stringify({"result" : "Clinic name cannot be empty."}));
+        return res.status(200).json({ success: false, data: {message: 'Clinic name cannot be empty.'} });
     }
 
     if (!req.body.phoneNumber) {
-        res.send(JSON.stringify({"result" : "Phone number cannot be empty."}));
+        return res.status(200).json({ success: false, data: {message: 'Phone number cannot be empty.'} });
     }
 
     if (!req.body.address) {
-        res.send(JSON.stringify({"result" : "Address cannot be empty."}));
+        return res.status(200).json({ success: false, data: {message: 'Address cannot be empty.'} });
     }
 
     // check user exist in DB?
@@ -50,7 +52,7 @@ router.post('/signup', async (req, res, next) => {
 
             if (results[0]) {
                 // user exist return
-                res.send(JSON.stringify({"result" : "This email has been token. Please use another one!"}));
+                return res.status(200).json({ success: false, data: {message: 'This email has been token. Please use another one!'} });
 
             } else {
                 // create new user
@@ -63,7 +65,7 @@ router.post('/signup', async (req, res, next) => {
                 var sql = 'INSERT INTO clinic_users (email, password, clinic_name, phone_number, address) VALUES (?, ?, ?, ?, ?)';
                 connection.query(sql, user, function (error, results, fields) {
                     if (error) throw error;
-                    res.send(JSON.stringify({"result" : {email: req.body.email}}));
+                    return res.status(200).json({ success: true, data: {email: req.body.email} });
         		});
 
             }
@@ -76,14 +78,14 @@ router.post('/signup', async (req, res, next) => {
 
 /* User login. */
 router.post('/login', async (req, res, next) => {
-
+    console.log('try login!');
     // check empty
     if (!req.body.email) {
-        res.send(JSON.stringify({"result" : "Email cannot be empty."}));
+        return res.status(200).json({ success: false, data: {message: 'Email cannot be empty.'} });
     }
 
     if (!req.body.password) {
-        res.send(JSON.stringify({"result" : "Password cannot be empty."}));
+        return res.status(200).json({ success: false, data: {message: 'Password cannot be empty.'} });
     }
 
     // check user exist in DB?
@@ -100,14 +102,13 @@ router.post('/login', async (req, res, next) => {
                 var isAuth = bcrypt.compareSync(req.body.password, dbPassword);
 
                 if (isAuth) {
-                    res.send(JSON.stringify({"result" : {email: req.body.email}}));
+                    return res.status(200).json({ success: true, data: {email: req.body.email} });
                 } else {
-                    res.send(JSON.stringify({"result" : 'Wrong password.'}));
+                    return res.status(200).json({ success: false, data: {message: 'Wrong password.'} });
                 }
             } else {
                 // user does not exist in DB
-
-                res.send(JSON.stringify({"result" : "This account does not exist."}));
+                return res.status(200).json({ success: false, data: {message: 'This account does not exist!'} });
             }
 		});
 	} catch (err) {
