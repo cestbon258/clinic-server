@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Generation Time: Sep 08, 2020 at 05:00 PM
+-- Generation Time: Sep 12, 2020 at 01:20 PM
 -- Server version: 5.7.23
 -- PHP Version: 7.2.10
 
@@ -35,8 +35,9 @@ CREATE TABLE `clinic_users` (
 --
 
 INSERT INTO `clinic_users` (`id`, `email`, `password`, `clinic_name`, `phone_number`, `address`, `created_at`) VALUES
-(9, 'aa@gmail.com', '$2a$10$K.064O4Y8aQbrZnjRvWU2e/bWKGrFPbk0DQ0tMMPhOIknNgMZfGKe', 'asdf', 'asdf', 'asdf', '2020-09-08 23:32:49'),
-(12, 'test@gmail.com', '$2a$10$GdUjJRqzE0xotos9MtstB.k5OMzb79p1DJyuzxN3.BJjJpB2IAj/a', 'test', '123123123', '123ST', '2020-09-08 23:53:00');
+(9, 'aa@gmail.com', '$2a$10$K.064O4Y8aQbrZnjRvWU2e/bWKGrFPbk0DQ0tMMPhOIknNgMZfGKe', 'Medical Health Centre', '88888888', '1ST, SSPO', '2020-09-08 23:32:49'),
+(12, 'test@gmail.com', '$2a$10$GdUjJRqzE0xotos9MtstB.k5OMzb79p1DJyuzxN3.BJjJpB2IAj/a', 'A Health Limited\r\n\r\n', '99999999', '123 ST, TW', '2020-09-08 23:53:00'),
+(13, 'anna@gmail.com', '$2a$10$654lpNQPih9Ol4ALzoQyiuTwLWo9dv54l7InJILiOjLuRT/i0cIta', 'Quality Healthcare Centre', '77777777', '1234 ST, Centre', '2020-09-12 00:41:08');
 
 -- --------------------------------------------------------
 
@@ -63,8 +64,8 @@ CREATE TABLE `records` (
 --
 
 INSERT INTO `records` (`id`, `clinic_id`, `doctor_name`, `patient_name`, `diagnosis`, `medication`, `fee`, `date`, `time`, `follow_up`, `created_at`) VALUES
-(1, 12, 'asdf', 'aa', 'asdf', 'asf', 123, '2020-10-02', '12:12:00', 1, '2020-09-09 00:26:22'),
-(2, 12, 'asdf2', 'aa2', 'asdf2', 'asf2', 1232, '2020-10-02', '12:12:00', 0, '2020-09-09 00:46:22');
+(1, 12, 'Andy Chan', 'Lily Chau', 'Cluster headache.', 'balabala', 123, '2020-09-15', '12:12:00', 1, '2020-09-09 00:26:22'),
+(2, 12, 'William Lau', 'Billy Wong', 'Tension headache', 'balabala', 999, '2020-10-02', '12:12:00', 0, '2020-09-09 00:46:22');
 
 --
 -- Indexes for dumped tables
@@ -90,7 +91,7 @@ ALTER TABLE `records`
 -- AUTO_INCREMENT for table `clinic_users`
 --
 ALTER TABLE `clinic_users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `records`

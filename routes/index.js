@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var bcrypt = require('bcryptjs');
+var validator = require("email-validator");
 
 var connection = require('../db-connector');
 
@@ -26,6 +27,11 @@ router.post('/signup', async (req, res, next) => {
     // check empty
     if (!req.body.email) {
         return res.status(200).json({ success: false, data: {message: 'Email cannot be empty.'} });
+    } else {
+        var isEmailFormat = validator.validate(req.body.email); // true
+        if (!isEmailFormat) {
+            return res.status(200).json({ success: false, data: {message: 'Please validate your email.'} });
+        }
     }
 
     if (!req.body.password) {
@@ -82,6 +88,11 @@ router.post('/login', async (req, res, next) => {
     // check empty
     if (!req.body.email) {
         return res.status(200).json({ success: false, data: {message: 'Email cannot be empty.'} });
+    } else {
+        var isEmailFormat = validator.validate(req.body.email); // true
+        if (!isEmailFormat) {
+            return res.status(200).json({ success: false, data: {message: 'Please validate your email.'} });
+        }
     }
 
     if (!req.body.password) {

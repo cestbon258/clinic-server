@@ -94,11 +94,16 @@ router.get('/get', async (req, res, next) => {
 
                     var userID = results[0].user_id;
 
-                    var sql = 'SELECT * FROM records WHERE clinic_id = ?';
+                    var sql = 'SELECT clinic_users.clinic_name, records.* FROM records JOIN clinic_users ON clinic_users.id = records.clinic_id WHERE clinic_id = ?';
                     connection.query(sql, userID, function (error, results, fields) {
                         if (error) throw error;
                         // console.log(results);
-                        return res.status(200).json({ success: true, data: {message: results} });
+                        // format data
+                        for (var i = 0; i < results.length; i++) {
+							results[i].date = new Date(results[i].date).toISOString().slice(0, 10);
+                            results[i].follow_up = results[i].follow_up == 1 ? 'Yes' : 'No';
+						}
+                        return res.status(200).json({ success: true, data: {data: results} });
             		});
 
                 } else {
